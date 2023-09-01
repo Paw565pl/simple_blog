@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "django-simple-blog"
+version = "0.1.0"
+description = ""
+authors = ["Paw565pl <paw565pl@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+crispy-bootstrap5 = "^0.7"
+django = "^4.2.4"
+django-crispy-forms = "^2.0"
+pillow = "^10.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
