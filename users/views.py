@@ -35,8 +35,9 @@ def profile(request):
             messages.success(request, f"Your account has been updated!")
             return redirect("profile")
     else:
-        user_update_form = UserUpdateForm(instance=request.user)
-        profile_update_form = ProfileUpdateForm(instance=request.user.profile)
+        (profile, _) = Profile.objects.get_or_create(user=request.user)
+        user_update_form = UserUpdateForm(instance=profile)
+        profile_update_form = ProfileUpdateForm(instance=profile)
         return render(
             request,
             "users/profile.html",
