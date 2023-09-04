@@ -1,6 +1,7 @@
 from typing import Any, Optional
 from django.db import models
 from django.db.models import QuerySet
+from django.urls import reverse
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -44,9 +45,12 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ["title", "content"]
 
+    def get_success_url(self) -> str:
+        return reverse("post-detail", args=[self.kwargs["pk"]])
+
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        Post.objects.create(**form.cleaned_data, author=self.request.user)
-        return HttpResponseRedirect("/")
+        Post.objects.update(**form.cleaned_data, author=self.request.user)
+        return HttpResponseRedirect(self.get_success_url())
 
     def test_func(self) -> bool | None:
         post = self.get_object()
@@ -65,7 +69,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:  # type: ignore
             return True
         return False
-    
+
     def get_success_url(self) -> str:
         messages.success(self.request, f"Your post has been successfully deleted.")
         return "/"
