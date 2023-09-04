@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "crispy_forms",
     "crispy_bootstrap5",
-    "blog.apps.BlogConfig",
-    "users.apps.UsersConfig",
+    "core",
+    "blog",
+    "users",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -88,8 +89,12 @@ WSGI_APPLICATION = "simpleBlog.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "simple_blog",
+        "USER": "postgres",
+        "PASSWORD": "mysecretpassword",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
@@ -139,8 +144,10 @@ MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = "blog-home"
+AUTH_USER_MODEL = "core.User"
 
-LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "blog-home/"
+
+LOGIN_URL = "login/"
 
 EMAIL_PORT = 1025
