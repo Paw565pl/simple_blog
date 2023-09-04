@@ -22,7 +22,7 @@ from .models import Post
 
 
 class PostListView(ListView):
-    model = Post
+    queryset = Post.objects.select_related("author").all()
     template_name = "blog/home.html"
     context_object_name = "posts"
     paginate_by = 10
