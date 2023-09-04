@@ -1,4 +1,4 @@
-{% extends 'blog/base.html' %} {% block content %} {% for post in posts %}
+{% extends 'blog/base.html' %} {% block content %}
 <article class="media content-section d-flex">
   <img
     src="{{ post.author.profile.image.url }}"
@@ -11,12 +11,8 @@
       <small class="text-muted">{{ post.date_posted|date:'d F Y' }}</small>
     </div>
     <p>{{ post.id }}</p>
-    <h2>
-      <a class="article-title" href="{% url 'post-detail' pk=post.id %}"
-        >{{ post.title }}</a
-      >
-    </h2>
+    <h2 class="article-title">{{ post.title }}</h2>
     <p class="article-content">{{ post.content }}</p>
   </div>
 </article>
-{% endfor %} {% endblock %}
+{% endblock %}
