@@ -4,8 +4,15 @@ from django.db.models import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
 from .models import Post
 
 # Create your views here.
@@ -46,6 +53,22 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == post.author:  # type: ignore
             return True
         return False
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    context_object_name = "post"
+    success_url = "/"
+
+    def test_func(self) -> bool | None:
+        post = self.get_object()
+        if self.request.user == post.author:  # type: ignore
+            return True
+        return False
+    
+    def get_success_url(self) -> str:
+        messages.success(self.request, f"Your post has been successfully deleted.")
+        return "/"
 
 
 def about(request):
