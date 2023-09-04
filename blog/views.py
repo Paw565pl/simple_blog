@@ -53,9 +53,13 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     fields = ["title", "content"]
     permission_denied_message = "You have to be logged in to create a post!"
 
+    def get_success_url(self) -> str:
+        messages.success(self.request, f"Your post has been successfully created.")
+        return reverse("blog-home")
+
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        Post.objects.create(**form.cleaned_data, author=self.request.user)
-        return HttpResponseRedirect("/")
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -63,6 +67,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ["title", "content"]
 
     def get_success_url(self) -> str:
+        messages.success(self.request, f"Your post has been successfully updated.")
         return reverse("post-detail", args=[self.kwargs["pk"]])
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
@@ -80,15 +85,15 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     queryset = Post.objects.select_related("author").all()
     context_object_name = "post"
 
+    def get_success_url(self) -> str:
+        messages.success(self.request, f"Your post has been successfully deleted.")
+        return "/"
+
     def test_func(self) -> bool | None:
         post = self.get_object()
         if self.request.user == post.author:  # type: ignore
             return True
         return False
-
-    def get_success_url(self) -> str:
-        messages.success(self.request, f"Your post has been successfully deleted.")
-        return "/"
 
 
 def about(request):
