@@ -26,7 +26,7 @@ class PostListView(ListView):
     template_name = "blog/home.html"
     context_object_name = "posts"
     paginate_by = 10
-    ordering = ["-date_posted"]
+    ordering = ["-last_update"]
 
 
 class UserPostListView(ListView):
@@ -36,7 +36,7 @@ class UserPostListView(ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         user = get_object_or_404(User, username=self.kwargs.get("username"))
-        return Post.objects.filter(author=user).order_by("-date_posted")
+        return Post.objects.filter(author=user).order_by("-last_update")
 
 
 class PostDetailView(DetailView):

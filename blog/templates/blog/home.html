@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %} {% block content %} {% for post in posts %}
 <article class="media content-section d-flex">
   <img
-    src="{{ post.author.profile.image.url }}"
+    src="{{ post.author.image.url }}"
     alt=""
     class="rounded-circle article-img align-self-center"
   />
@@ -10,7 +10,7 @@
       <a class="mr-2" href="{% url 'user-profile' post.author.username %}"
         >{{ post.author }}</a
       >
-      <small class="text-muted">{{ post.date_posted|date:'d F Y' }}</small>
+      <small class="text-muted">{{ post.last_update|date:'d F Y' }}</small>
     </div>
     <h2>
       <a class="article-title" href="{% url 'post-detail' pk=post.id %}"
@@ -31,8 +31,8 @@
       class="btn btn-outline-info mb-4"
       >Previous</a
     >
-    {% endif %} {% for num in page_obj.paginator.page_range %} {% if
-    page_obj.number == num %}
+    {% endif %} {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
     <a href="?page={{ num }}" class="btn btn-info mb-4">{{ num }}</a>
     {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
     <a href="?page={{ num }}" class="btn btn-outline-info mb-4">{{ num }}</a>
