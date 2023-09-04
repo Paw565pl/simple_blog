@@ -1,8 +1,11 @@
+from typing import Any, Optional
+from django.db import models
+from django.db.models import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post
 
 # Create your views here.
@@ -28,6 +31,21 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         Post.objects.create(**form.cleaned_data, author=self.request.user)
         return HttpResponseRedirect("/")
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ["title", "content"]
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        Post.objects.create(**form.cleaned_data, author=self.request.user)
+        return HttpResponseRedirect("/")
+
+    def test_func(self) -> bool | None:
+        post = self.get_object()
+        if self.request.user == post.author:  # type: ignore
+            return True
+        return False
 
 
 def about(request):
