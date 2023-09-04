@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %} {% block content %}
 <article class="media content-section d-flex">
   <img
-    src="{{ post.author.profile.image.url }}"
+    src="{{ post.author.image.url }}"
     alt=""
     class="rounded-circle article-img align-self-center"
   />
@@ -10,7 +10,7 @@
       <a class="mr-2" href="{% url 'user-profile' post.author.username %}"
         >{{ post.author }}</a
       >
-      <small class="text-muted">{{ post.last_update|date:'d F Y' }}</small>
+      <small class="text-muted">{{ post.date_posted|date:'d F Y' }}</small>
       {% if post.author == user %}
       <div>
         <a

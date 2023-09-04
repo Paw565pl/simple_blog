@@ -15,7 +15,7 @@ from django.views.generic import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .models import Post
 
 # Create your views here.
@@ -35,12 +35,16 @@ class UserPostListView(ListView):
     paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Any]:
-        user = get_object_or_404(User, username=self.kwargs.get("username"))
-        return Post.objects.filter(author=user).order_by("-last_update")
+        user = get_object_or_404(get_user_model(), username=self.kwargs.get("username"))
+        return (
+            Post.objects.filter(author=user)
+            .select_related("author")
+            .order_by("-last_update")
+        )
 
 
 class PostDetailView(DetailView):
-    model = Post
+    queryset = Post.objects.select_related("author").all()
     context_object_name = "post"
 
 
@@ -55,15 +59,15 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Post
+    queryset = Post.objects.select_related("author").all()
     fields = ["title", "content"]
 
     def get_success_url(self) -> str:
         return reverse("post-detail", args=[self.kwargs["pk"]])
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        Post.objects.update(**form.cleaned_data, author=self.request.user)
-        return HttpResponseRedirect(self.get_success_url())
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
     def test_func(self) -> bool | None:
         post = self.get_object()
@@ -73,9 +77,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Post
+    queryset = Post.objects.select_related("author").all()
     context_object_name = "post"
-    success_url = "/"
 
     def test_func(self) -> bool | None:
         post = self.get_object()
