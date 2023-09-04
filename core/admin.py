@@ -7,3 +7,5 @@ from .forms import UserChangeForm
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     form = UserChangeForm
+    list_per_page = 20
+    search_fields = ["username__istartswith"]
