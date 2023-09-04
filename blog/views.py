@@ -1,10 +1,11 @@
 from typing import Any, Optional
 from django.db import models
 from django.db.models import QuerySet
+from django.db.models.query import QuerySet
 from django.urls import reverse
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import (
     ListView,
     DetailView,
@@ -14,6 +15,7 @@ from django.views.generic import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
+from django.contrib.auth.models import User
 from .models import Post
 
 # Create your views here.
@@ -23,6 +25,7 @@ class PostListView(ListView):
     model = Post
     template_name = "blog/home.html"
     context_object_name = "posts"
+    paginate_by = 10
     ordering = ["-date_posted"]
 
 
