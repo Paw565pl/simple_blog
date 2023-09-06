@@ -148,6 +148,6 @@ AUTH_USER_MODEL = "core.User"
 
 LOGIN_REDIRECT_URL = "blog_home"
 
-LOGIN_URL = "login/"
+LOGIN_URL = "login"
 
 EMAIL_PORT = 1025
