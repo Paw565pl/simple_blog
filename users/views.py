@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm
+from django.contrib.auth.views import PasswordResetView
+from .forms import UserRegisterForm, UserUpdateForm, CustomPasswordResetForm
 
 
 # Create your views here.
@@ -16,7 +17,7 @@ def register(request):
     return render(request, "users/register.html", {"form": form})
 
 
-# @login_required()
+# @login_required() # FIXME: class based views
 def profile(request):
     user = request.user
     if request.method == "POST":
@@ -39,3 +40,8 @@ def profile(request):
                 "user_update_form": user_update_form,
             },
         )
+
+
+class CustomPasswordResetView(PasswordResetView):
+    form_class = CustomPasswordResetForm
+    from_email = "passwordservice@simpleblog.com"
