@@ -1,20 +1,22 @@
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib import messages
+from django.views.generic import CreateView
 from django.contrib.auth.views import PasswordResetView
 from .forms import UserRegisterForm, UserUpdateForm, CustomPasswordResetForm
 
 
 # Create your views here.
-def register(request):
-    if request.method == "POST":
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"Account created! You can now log in.")
-            return redirect("login")
-    else:
-        form = UserRegisterForm()
-    return render(request, "users/register.html", {"form": form})
+class RegisterView(CreateView):
+    form_class = UserRegisterForm
+    template_name = "users/register.html"
+    success_url = reverse_lazy("login")
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        messages.success(self.request, f"Account created! You can now log in.")
+        return super().form_valid(form)
 
 
 # @login_required() # FIXME: class based views
