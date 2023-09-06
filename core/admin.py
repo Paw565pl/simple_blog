@@ -6,6 +6,7 @@ from .forms import UserChangeForm
 # Register your models here.
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    form = UserChangeForm
+    list_display = ["username"]
     list_per_page = 20
     search_fields = ["username__istartswith"]
+    form = UserChangeForm
