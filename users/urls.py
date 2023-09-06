@@ -20,7 +20,7 @@ urlpatterns = [
         name="password_reset",
     ),
     path(
-        "password-reset/done/",  # TODO: change naming
+        "password-reset/done/",
         auth_views.PasswordResetDoneView.as_view(
             template_name="users/password_reset_done.html"
         ),

@@ -55,7 +55,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self) -> str:
         messages.success(self.request, f"Your post has been successfully created.")
-        return reverse("blog-home")
+        return reverse("blog_home")
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         form.instance.author = self.request.user
@@ -68,7 +68,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self) -> str:
         messages.success(self.request, f"Your post has been successfully updated.")
-        return reverse("post-detail", args=[self.kwargs["pk"]])
+        return reverse("post_detail", args=[self.kwargs["pk"]])
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         form.instance.author = self.request.user

@@ -7,13 +7,13 @@
   />
   <div class="media-body">
     <div class="article-metadata">
-      <a class="mr-2" href="{% url 'user-profile' post.author.username %}"
+      <a class="mr-2" href="{% url 'user_profile' post.author.username %}"
         >{{ post.author }}</a
       >
       <small class="text-muted">{{ post.last_update|date:'d F Y' }}</small>
     </div>
     <h2>
-      <a class="article-title" href="{% url 'post-detail' pk=post.id %}"
+      <a class="article-title" href="{% url 'post_detail' pk=post.id %}"
         >{{ post.title }}</a
       >
     </h2>
@@ -31,7 +31,7 @@
       class="btn btn-outline-info mb-4"
       >Previous</a
     >
-    {% endif %} {% for num in page_obj.paginator.page_range %}
+    {% endif %} {% for num in page_obj.paginator.page_range %} 
     {% if page_obj.number == num %}
     <a href="?page={{ num }}" class="btn btn-info mb-4">{{ num }}</a>
     {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}

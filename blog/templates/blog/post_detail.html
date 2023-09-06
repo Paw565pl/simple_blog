@@ -7,7 +7,7 @@
   />
   <div class="media-body">
     <div class="article-metadata">
-      <a class="mr-2" href="{% url 'user-profile' post.author.username %}"
+      <a class="mr-2" href="{% url 'user_profile' post.author.username %}"
         >{{ post.author }}</a
       >
       <small class="text-muted">{{ post.date_posted|date:'d F Y' }}</small>
@@ -15,12 +15,12 @@
       <div>
         <a
           class="btn btn-secondary btn-sm my-1"
-          href="{% url 'post-update' pk=post.id %}"
+          href="{% url 'post_update' pk=post.id %}"
           >Update</a
         >
         <a
           class="btn btn-danger btn-sm my-1"
-          href="{% url 'post-delete' pk=post.id %}"
+          href="{% url 'post_delete' pk=post.id %}"
           >Delete</a
         >
       </div>
