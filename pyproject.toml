@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "django-simple-blog"
+name = "simple-blog"
 version = "0.1.0"
 description = ""
 authors = ["Paw565pl <paw565pl@gmail.com>"]
@@ -19,6 +19,7 @@ psycopg-binary = "^3.1.10"
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.1"
 pytest-django = "^4.5.2"
+model-bakery = "^1.15.0"
 
 [build-system]
 requires = ["poetry-core"]
