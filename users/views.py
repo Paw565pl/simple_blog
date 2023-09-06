@@ -1,10 +1,13 @@
+from typing import Any
+from django.db.models import QuerySet, Model
 from django.forms.models import BaseModelForm
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.http import HttpResponse
 from django.contrib import messages
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth import get_user_model
 from .forms import UserRegisterForm, UserUpdateForm, CustomPasswordResetForm
 
 
@@ -15,33 +18,22 @@ class RegisterView(CreateView):
     success_url = reverse_lazy("login")
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        messages.success(self.request, f"Account created! You can now log in.")
+        messages.success(self.request, f"Account created. You can now log in.")
         return super().form_valid(form)
 
 
-# @login_required() # FIXME: class based views
-def profile(request):
-    user = request.user
-    if request.method == "POST":
-        user_update_form = UserUpdateForm(request.POST, instance=user)
-        if user_update_form.is_valid():
-            user_update_form.save()
-            messages.success(request, f"Your account has been updated!")
-            return redirect("profile")
-        else:
-            messages.error(
-                request, f"Provided data does not meet the requirements!", "danger"
-            )
-            return redirect("profile")
-    else:
-        user_update_form = UserUpdateForm(instance=user)
-        return render(
-            request,
-            "users/profile.html",
-            {
-                "user_update_form": user_update_form,
-            },
-        )
+class ProfileView(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    fields = ["username", "email", "image"]
+    template_name = "users/profile.html"
+    success_url = reverse_lazy("profile")
+
+    def get_object(self, queryset: QuerySet[Any] | None = ...) -> Model:
+        return self.request.user
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        messages.success(self.request, f"Your account has been updated.")
+        return super().form_valid(form)
 
 
 class CustomPasswordResetView(PasswordResetView):
