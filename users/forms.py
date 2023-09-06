@@ -1,4 +1,4 @@
-from django.forms import ModelForm, ValidationError
+from django.forms import ModelForm, ValidationError, FileInput, ImageField
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.contrib.auth import get_user_model
 
@@ -10,6 +10,8 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(ModelForm):
+    image = ImageField(widget=FileInput)
+
     class Meta:
         model = get_user_model()
         fields = ["username", "email", "image"]

@@ -24,7 +24,7 @@ class RegisterView(CreateView):
 
 class ProfileView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
-    fields = ["username", "email", "image"]
+    form_class = UserUpdateForm
     template_name = "users/profile.html"
     success_url = reverse_lazy("profile")
 
