@@ -45,6 +45,14 @@ def full_update_post(client):
 
 
 @pytest.fixture
+def delete_post(client):
+    def do_delete_post(id):
+        return client.delete(f"/post/{id}/delete/")
+
+    return do_delete_post
+
+
+@pytest.fixture
 def user():
     return baker.make(get_user_model())
 

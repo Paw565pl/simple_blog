@@ -69,3 +69,27 @@ class TestUpdatePost:
         response = full_update_post(id, updated_data)
 
         assert response.status_code == 403
+
+
+@pytest.mark.django_db
+class TestDeletePost:
+    def test_if_user_is_not_author_returns_403(self, client, users, posts, delete_post):
+        (user1, user2) = users()
+        (post,) = posts(user1, 1)
+        client.force_login(user2)
+
+        id = post.id
+        response = delete_post(id)
+
+        assert Post.objects.count() == 1
+        assert response.status_code == 403
+
+    def test_if_data_is_valid_returns_302(self, authenticated_user, posts, delete_post):
+        (post,) = posts(authenticated_user, 1)
+
+        id = post.id
+        response = delete_post(id)
+
+        assert Post.objects.count() == 0
+        assert response.status_code == 302
+        assert response.url == "/"
