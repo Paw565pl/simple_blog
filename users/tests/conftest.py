@@ -15,3 +15,11 @@ def login_user(client):
         return client.post("/login/", {"username": username, "password": password})
 
     return do_login_user
+
+
+@pytest.fixture
+def update_user(client):
+    def do_update_user(user_data):
+        return client.post("/profile/", user_data)
+
+    return do_update_user
