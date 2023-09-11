@@ -48,8 +48,6 @@ class TestLogin:
         assert response.context["form_show_errors"]
         assert response.context["user"].is_anonymous
 
-    # TODO: test if user tries to login twice
-
     def test_if_data_is_valid_logins(self, register_user, login_user):
         register_user(valid_data)
         response = login_user(valid_data["username"], valid_data["password1"])
