@@ -3,6 +3,9 @@ from django.forms.models import model_to_dict
 from blog.models import Post
 import pytest
 
+valid_data = {"title": "test", "content": "test"}
+invalid_data = {"title": "", "content": ""}
+
 
 @pytest.mark.django_db
 class TestRetrievePost:
@@ -33,11 +36,8 @@ class TestRetrievePost:
 
 @pytest.mark.django_db
 class TestCreatePost:
-    valid_data = {"title": "test", "content": "test"}
-    invalid_data = {"title": "", "content": ""}
-
     def test_if_user_is_anonymous_returns_login_view(self, create_post):
-        response = create_post(self.valid_data)
+        response = create_post(valid_data)
 
         assert response.status_code == 302
         assert response.url == "/login/?next=/post/new/"
@@ -48,13 +48,13 @@ class TestCreatePost:
         authenticated_user,
         create_post,
     ):
-        response = create_post(self.invalid_data)
+        response = create_post(invalid_data)
 
         assert response.status_code == 200
         assert Post.objects.count() == 0
 
     def test_if_data_is_valid_creates(self, authenticated_user, create_post):
-        response = create_post(self.valid_data)
+        response = create_post(valid_data)
 
         assert response.status_code == 302
         assert response.url == "/"
@@ -64,13 +64,14 @@ class TestCreatePost:
 
         if created_post:
             created_post_dict = model_to_dict(
-                created_post, fields=list(self.valid_data.keys())
+                created_post, fields=list(valid_data.keys())
             )
-            assert created_post_dict == self.valid_data
+            assert created_post_dict == valid_data
 
 
 @pytest.mark.django_db
 class TestUpdatePost:
+    # TODO: invalid data
     def test_if_user_is_not_author_returns_403(
         self, client, bake_users, bake_posts, update_post
     ):
@@ -79,15 +80,29 @@ class TestUpdatePost:
         client.force_login(user2)
 
         id = post.id
-        updated_data = {"title": "test1", "content": "test1"}
-        response = update_post(id, updated_data)
+        response = update_post(id, valid_data)
 
         assert response.status_code == 403
 
         post_dict = model_to_dict(
-            Post.objects.get(id=id), fields=list(updated_data.keys())
+            Post.objects.get(id=id), fields=list(valid_data.keys())
         )
-        assert post_dict != updated_data
+        assert post_dict != valid_data
+
+    def test_if_data_is_invalid_does_not_update(
+        self, authenticated_user, bake_posts, update_post
+    ):
+        (post,) = bake_posts(authenticated_user, 1)
+
+        id = post.id
+        response = update_post(id, invalid_data)
+
+        assert response.status_code == 200
+
+        updated_post_dict = model_to_dict(
+            Post.objects.get(id=id), fields=list(invalid_data.keys())
+        )
+        assert updated_post_dict != invalid_data
 
     def test_if_data_is_valid_updates(
         self, authenticated_user, bake_posts, update_post
@@ -95,16 +110,15 @@ class TestUpdatePost:
         (post,) = bake_posts(authenticated_user, 1)
 
         id = post.id
-        updated_data = {"title": "test1", "content": "test1"}
-        response = update_post(id, updated_data)
+        response = update_post(id, valid_data)
 
         assert response.status_code == 302
-        assert response.url == "/post/23/"
+        assert response.url == f"/post/{id}/"
 
         updated_post_dict = model_to_dict(
-            Post.objects.get(id=id), fields=list(updated_data.keys())
+            Post.objects.get(id=id), fields=list(valid_data.keys())
         )
-        assert updated_post_dict == updated_data
+        assert updated_post_dict == valid_data
 
 
 @pytest.mark.django_db
