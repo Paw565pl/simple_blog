@@ -24,7 +24,7 @@ class ProfileView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("profile")
     success_message = "Your account has been updated."
 
-    def get_object(self, queryset: QuerySet[Any] | None = ...) -> Model:
+    def get_object(self, queryset: QuerySet[Any] | None = ...):
         return self.request.user
 
 
