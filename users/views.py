@@ -1,5 +1,5 @@
 from typing import Any
-from django.db.models import QuerySet, Model
+from django.db.models import QuerySet
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
