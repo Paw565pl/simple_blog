@@ -71,7 +71,6 @@ class TestCreatePost:
 
 @pytest.mark.django_db
 class TestUpdatePost:
-    # TODO: invalid data
     def test_if_user_is_not_author_returns_403(
         self, client, bake_users, bake_posts, update_post
     ):
@@ -136,6 +135,7 @@ class TestDeletePost:
         assert response.status_code == 403
         assert Post.objects.count() == 1
 
+    # TODO: if bad id is given
     def test_if_data_is_valid_deletes(
         self, authenticated_user, bake_posts, delete_post
     ):
