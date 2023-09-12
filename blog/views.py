@@ -92,7 +92,3 @@ class PostDeleteView(
         if self.request.user == post.author:  # type: ignore
             return True
         return False
-
-
-def about(request):  # TODO: use template view
-    return render(request, "blog/about.html", {"title": "About"})

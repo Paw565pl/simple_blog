@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -20,72 +20,78 @@
   </head>
   <body>
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <nav class="navbar navbar-expand-lg nav-bg">
         <div class="container">
-          <a class="mr-4 navbar-brand" href="{% url 'blog_home' %}"
-            >Django Blog</a
-          >
+          <a class="navbar-brand" href="{% url 'blog_home' %}">Simple Blog</a>
           <button
             class="navbar-toggler"
             type="button"
-            data-toggle="collapse"
-            data-target="#navbarToggle"
-            aria-controls="navbarToggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="mr-auto navbar-nav">
-              <a class="nav-item nav-link" href="{% url 'blog_home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'blog_about' %}"
-                >About</a
-              >
-            </div>
-            <!-- Navbar Right Side -->
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
               {% if user.is_authenticated %}
-              <a class="nav-item nav-link" href="{% url 'profile' %}"
-                >Profile</a
-              >
-              <a class="nav-item nav-link" href="{% url 'post_create' %}"
-                >New Post</a
-              >
-              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              <a class="nav-link" href="{% url 'post_create' %}">New Post</a>
+              <a class="nav-link" href="{% url 'profile' %}">My Profile</a>
+              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
               {% else %}
-              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-              <a class="nav-item nav-link" href="{% url 'register' %}"
-                >Register</a
-              >
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+              <a class="nav-link" href="{% url 'register' %}">Register</a>
               {% endif %}
             </div>
           </div>
         </div>
       </nav>
     </header>
-    <main role="main" class="container">
+    <main role="main" class="container mt-5">
       <div class="row">
         <div class="col-md-8">
           {% if messages %} {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+          <div
+            class="alert alert-{{ message.tags }} alert-dismissible fade show mb-3"
+            role="alert"
+          >
+            {{ message }}
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
           {% endfor %} {% endif %} {% block content %}{% endblock %}
         </div>
         <div class="col-md-4">
-          <div class="content-section">
+          <div class="content-section py-3">
             <h3>Our Sidebar</h3>
             <p class="text-muted">
               You can put any information here you'd like.
             </p>
             <ul class="list-group">
-              <li class="list-group-item list-group-item-light">
+              <li
+                class="list-group-item list-group-item-secondary active"
+                role="button"
+              >
                 Latest Posts
               </li>
-              <li class="list-group-item list-group-item-light">
+              <li
+                class="list-group-item list-group-item-secondary"
+                role="button"
+              >
                 Announcements
               </li>
-              <li class="list-group-item list-group-item-light">Calendars</li>
-              <li class="list-group-item list-group-item-light">etc</li>
+              <li
+                class="list-group-item list-group-item-secondary"
+                role="button"
+              >
+                Calendars
+              </li>
             </ul>
           </div>
         </div>
