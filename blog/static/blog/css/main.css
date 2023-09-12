@@ -61,12 +61,12 @@ a.article-title:hover {
   border-bottom: 1px solid #e3e3e3;
 }
 
-.article-metadata a {
+.article-metadata .article-author {
   color: #0e7ec3;
   text-decoration: none;
 }
 
-.article-metadata a:hover {
+.article-metadata .article-author:hover {
   color: #50a5ed;
 }
 
