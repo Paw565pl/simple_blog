@@ -3,25 +3,7 @@
   Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})
 </h1>
 {% for post in posts %}
-<article class="media content-section d-flex">
-  <img
-    src="{{ post.author.image.url }}"
-    alt=""
-    class="rounded-circle article-img align-self-center"
-  />
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2 article-author" href="{% url 'user_profile' post.author.username %}"
-        >{{ post.author }}</a
-      >
-      <small class="text-muted">{{ post.last_update|date:'d F Y' }}</small>
-    </div>
-    <h2>
-      <a class="article-title" href="{% url 'post_detail' pk=post.id %}"
-        >{{ post.title }}</a
-      >
-    </h2>
-    <p class="article-content">{{ post.content }}</p>
-  </div>
-</article>
-{% endfor %} {% include "blog/pagination.html" %} {% endblock %}
+  {% include "blog/post.html" with render_buttons=False %}
+{% endfor %}
+{% include "blog/pagination.html" %}
+{% endblock %}

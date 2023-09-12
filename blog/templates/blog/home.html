@@ -9,28 +9,9 @@
     + Add new post
   </a>
 </div>
-{% endif %} {% for post in posts %}
-<article class="media content-section d-flex">
-  <img
-    src="{{ post.author.image.url }}"
-    alt=""
-    class="rounded-circle article-img align-self-center"
-  />
-  <div class="media-body">
-    <div class="article-metadata d-flex align-items-center gap-2">
-      <a class="mr-2 article-author" href="{% url 'user_profile' post.author.username %}"
-        >{{ post.author }}</a
-      >
-      <small class="text-muted fw-light article-date"
-        >{{ post.last_update|date:'d F Y' }}</small
-      >
-    </div>
-    <h2>
-      <a class="article-title" href="{% url 'post_detail' pk=post.id %}"
-        >{{ post.title }}</a
-      >
-    </h2>
-    <p class="article-content">{{ post.content }}</p>
-  </div>
-</article>
-{% endfor %} {% include "blog/pagination.html" %} {% endblock %}
+{% endif %}
+{% for post in posts %}
+  {% include "blog/post.html" with render_buttons=False %} 
+{% endfor %}
+{% include "blog/pagination.html" %}
+{% endblock %}

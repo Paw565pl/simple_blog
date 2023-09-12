@@ -1,33 +1,4 @@
-{% extends 'blog/base.html' %} {% block content %}
-<article class="media content-section d-flex">
-  <img
-    src="{{ post.author.image.url }}"
-    alt=""
-    class="rounded-circle article-img align-self-center"
-  />
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2 article-author" href="{% url 'user_profile' post.author.username %}"
-        >{{ post.author }}</a
-      >
-      <small class="text-muted">{{ post.date_posted|date:'d F Y' }}</small>
-      {% if post.author == user %}
-      <div>
-        <a
-          class="btn btn-secondary btn-sm my-1"
-          href="{% url 'post_update' pk=post.id %}"
-          >Update</a
-        >
-        <a
-          class="btn btn-danger btn-sm my-1"
-          href="{% url 'post_delete' pk=post.id %}"
-          >Delete</a
-        >
-      </div>
-      {% endif %}
-    </div>
-    <h2 class="article-title">{{ post.title }}</h2>
-    <p class="article-content">{{ post.content }}</p>
-  </div>
-</article>
+{% extends 'blog/base.html' %}
+{% block content %}
+{% include "blog/post.html" with render_buttons=True %}
 {% endblock %}
