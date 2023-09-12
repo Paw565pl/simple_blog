@@ -62,8 +62,12 @@ a.article-title:hover {
 }
 
 .article-metadata a {
-  color: #C8FFE0;
+  color: #0e7ec3;
   text-decoration: none;
+}
+
+.article-metadata a:hover {
+  color: #50a5ed;
 }
 
 .article-svg {
