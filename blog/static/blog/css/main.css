@@ -6,6 +6,10 @@ ul {
   background-color: #1d267d;
 }
 
+.logo {
+  width: 150px;
+}
+
 .site-header .navbar-nav .nav-link,
 h1,
 h2,
@@ -26,13 +30,19 @@ h6 {
 
 .content-section {
   padding: 0.5em 1.5em;
-  border: 2px solid #dddddd;
-  border-radius: 1em;
+  border: 1px solid #dddddd;
+  border-radius: 0.75em;
   margin-bottom: 1.5em;
 }
 
-a.article-title:hover {
+a.article-title {
+  color: #cbd5db;
+  font-weight: 600;
   text-decoration: none;
+}
+
+a.article-title:hover {
+  color: #ffffff;
 }
 
 .article-content {
@@ -52,6 +62,7 @@ a.article-title:hover {
 }
 
 .article-metadata a {
+  color: #C8FFE0;
   text-decoration: none;
 }
 
@@ -70,4 +81,8 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+
+.article-date {
+  font-size: 0.75em;
 }

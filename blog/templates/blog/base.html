@@ -13,16 +13,21 @@
     />
     <link rel="stylesheet" href="{% static './blog/css/main.css'%}" />
     {% if title %}
-    <title>Django blog - {{ title }}</title>
+    <title>{{ title }}</title>
     {% else %}
-    <title>Django blog</title>
+    <title>Simple blog</title>
     {% endif %}
   </head>
   <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-lg nav-bg">
         <div class="container">
-          <a class="navbar-brand" href="{% url 'blog_home' %}">Simple Blog</a>
+          <a class="navbar-brand" href="{% url 'blog_home' %}"
+            ><img
+              src="{% static './blog/img/logo.png'%}"
+              alt="logo"
+              class="logo"
+          /></a>
           <button
             class="navbar-toggler"
             type="button"
@@ -65,7 +70,7 @@
               aria-label="Close"
             ></button>
           </div>
-          {% endfor %} {% endif %} {% block content %}{% endblock %}
+          {% endfor %} {% endif %} {% block content %} {% endblock %}
         </div>
         <div class="col-md-4">
           <div class="content-section py-3">
@@ -75,21 +80,15 @@
             </p>
             <ul class="list-group">
               <li
-                class="list-group-item list-group-item-secondary active"
+                class="list-group-item list-group-item-dark active"
                 role="button"
               >
                 Latest Posts
               </li>
-              <li
-                class="list-group-item list-group-item-secondary"
-                role="button"
-              >
+              <li class="list-group-item list-group-item-dark" role="button">
                 Announcements
               </li>
-              <li
-                class="list-group-item list-group-item-secondary"
-                role="button"
-              >
+              <li class="list-group-item list-group-item-dark" role="button">
                 Calendars
               </li>
             </ul>
