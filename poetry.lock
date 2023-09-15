@@ -93,6 +93,20 @@ django = ">=3.2.4"
 sqlparse = ">=0.2"
 
 [[package]]
+name = "django-hcaptcha-field"
+version = "1.4.0"
+description = "Django hCaptcha Field provides a simple way to protect your Django forms using hCaptcha."
+optional = false
+python-versions = ">=3.5"
+files = [
+    {file = "django-hcaptcha-field-1.4.0.tar.gz", hash = "sha256:bcf2f698b1dc5f8ce411c11696df5785298df0cbd2fa564b09bd96609060bf34"},
+    {file = "django_hcaptcha_field-1.4.0-py3-none-any.whl", hash = "sha256:36001030f53af709db3be01bf1d25023706b701bb7130f67f2aa58900b20df42"},
+]
+
+[package.dependencies]
+Django = ">=2.2"
+
+[[package]]
 name = "django-resized"
 version = "1.0.2"
 description = "Resizes image origin to specified size."
@@ -391,4 +405,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "bfc25d405f6f1de535a1b069098c27c7d637287a34b4c5386f52fdde18b7a16e"
+content-hash = "e6199724b48452371e2945d3b1306a282104df14e5c3478efed02c1243470995"
