@@ -6,20 +6,20 @@ SECRET_KEY = environ.get("SECRET_KEY")
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "simple_blog",
-        "USER": "postgres",
-        "PASSWORD": "mysecretpassword",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": environ.get("DB_NAME"),
+        "USER": environ.get("DB_USER"),
+        "PASSWORD": environ.get("DB_PASSWORD"),
+        "HOST": environ.get("DB_HOST"),
+        "PORT": environ.get("DB_PORT"),
     }
 }
 
-# EMAIL
+# TODO: EMAIL
 
 HCAPTCHA_SITEKEY = environ.get("HCAPTCHA_SITEKEY")
 

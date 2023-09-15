@@ -20,7 +20,7 @@ DATABASES = {
         "NAME": "simple_blog",
         "USER": "postgres",
         "PASSWORD": "mysecretpassword",
-        "HOST": "localhost",
+        "HOST": "db",
         "PORT": "5432",
     }
 }

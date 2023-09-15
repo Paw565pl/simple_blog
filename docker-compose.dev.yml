@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8000:8000
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: on-failure
+    depends_on:
+      - db
+      - maildev
+    volumes:
+      - .:/app
+  db:
+    image: postgres:15.4-alpine3.18
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: simple_blog
+    volumes:
+      - pgdata-dev:/var/lib/postgresql/data
+  maildev:
+    image: maildev/maildev:2.1.0
+    ports:
+      - 1025:1025
+      - 1080:1080
+    restart: always
+  ptw:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: pytest-watch
+    restart: always
+    depends_on:
+      - app
+volumes:
+  pgdata-dev:
