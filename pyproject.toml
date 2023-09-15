@@ -31,5 +31,5 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "simpleBlog.settings.dev"
+DJANGO_SETTINGS_MODULE = "simpleBlog.settings.test"
 python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
