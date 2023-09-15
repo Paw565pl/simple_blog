@@ -145,7 +145,7 @@ class TestDeletePost:
         id = post.id + 1
         response = delete_post(id)
 
-        assert response.status_code == 404
+        assert response.status_code == 405
         assert Post.objects.count() == 1
 
     def test_if_id_is_valid_deletes(self, authenticated_user, bake_posts, delete_post):
