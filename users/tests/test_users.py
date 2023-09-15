@@ -8,12 +8,14 @@ valid_data = {
     "email": "user1@email.com",
     "password1": "mysecretpassword123",
     "password2": "mysecretpassword123",
+    "h-captcha-response": "10000000-aaaa-bbbb-cccc-000000000001",
 }
 invalid_data = {
     "username": "user2*",
     "email": "",
     "password1": "mysecretpassword123",
     "password2": "mysecretpassword456",
+    "h-captcha-response": "10000000-aaaa-bbbb-cccc-000000000001",
 }
 
 
