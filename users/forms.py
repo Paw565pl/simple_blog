@@ -1,5 +1,9 @@
 from django.forms import ModelForm, ValidationError, FileInput, ImageField
-from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    UserCreationForm,
+    PasswordResetForm,
+)
 from django.contrib.auth import get_user_model
 from hcaptcha_field import hCaptchaField
 
@@ -9,7 +13,11 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ["username", "email", "password1", "password2"]
+        fields = ["username", "email"]
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    hcaptcha = hCaptchaField(theme="dark")
 
 
 class UserUpdateForm(ModelForm):

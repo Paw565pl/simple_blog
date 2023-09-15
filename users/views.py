@@ -4,9 +4,14 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import LoginView, PasswordResetView
 from django.contrib.auth import get_user_model
-from .forms import UserRegisterForm, UserUpdateForm, CustomPasswordResetForm
+from .forms import (
+    CustomAuthenticationForm,
+    UserRegisterForm,
+    UserUpdateForm,
+    CustomPasswordResetForm,
+)
 
 
 # Create your views here.
@@ -15,6 +20,12 @@ class RegisterView(SuccessMessageMixin, CreateView):
     template_name = "users/register.html"
     success_url = reverse_lazy("login")
     success_message = "Account created. You can now log in."
+
+
+class CustomLoginView(LoginView):
+    form_class = CustomAuthenticationForm
+    template_name = "users/login.html"
+    redirect_authenticated_user = True
 
 
 class ProfileView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
