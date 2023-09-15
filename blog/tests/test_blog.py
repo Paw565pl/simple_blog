@@ -10,7 +10,8 @@ invalid_data = {"title": "", "content": ""}
 @pytest.mark.django_db
 class TestRetrievePost:
     def test_if_post_exists_returns_200(self, bake_user, bake_posts, get_post):
-        bake_posts = bake_posts(bake_user)
+        baked_user = bake_user()
+        bake_posts = bake_posts(baked_user)
 
         for post in bake_posts:
             response = get_post(post.id)
@@ -27,9 +28,10 @@ class TestRetrievePost:
     def test_if_user_posts_exist_returns_200(
         self, bake_user, bake_posts, get_posts_by_user
     ):
-        bake_posts = bake_posts(bake_user)
+        baked_user = bake_user()
+        bake_posts = bake_posts(baked_user)
 
-        response = get_posts_by_user(bake_user.username)
+        response = get_posts_by_user(baked_user.username)
 
         assert response.status_code == 200
 
