@@ -8,7 +8,7 @@ class UserRegisterForm(UserCreationForm):
     hcaptcha = hCaptchaField()
     class Meta:
         model = get_user_model()
-        fields = ["username", "email", "password1", "password2", "hcaptcha"]
+        fields = ["username", "email", "password1", "password2"]
 
 
 class UserUpdateForm(ModelForm):
