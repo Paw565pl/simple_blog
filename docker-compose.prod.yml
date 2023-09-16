@@ -8,21 +8,5 @@ services:
       - 8000:8000
     command: sh -c "python manage.py migrate && python manage.py collectstatic && gunicorn -b 0.0.0.0:8000 simpleBlog.wsgi"
     restart: on-failure
-    depends_on:
-      - db
-      - maildev
     env_file:
       - .env
-  # TODO: real postgres
-  db:
-    image: postgres:15.4-alpine3.18
-    ports:
-      - 5432:5432
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: mysecretpassword
-      POSTGRES_DB: simple_blog
-    volumes:
-      - pgdata-prod:/var/lib/postgresql/data
-volumes:
-  pgdata-prod:
