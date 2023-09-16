@@ -485,7 +485,21 @@ files = [
 [package.extras]
 watchmedo = ["PyYAML (>=3.10)"]
 
+[[package]]
+name = "whitenoise"
+version = "6.5.0"
+description = "Radically simplified static file serving for WSGI applications"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "whitenoise-6.5.0-py3-none-any.whl", hash = "sha256:16468e9ad2189f09f4a8c635a9031cc9bb2cdbc8e5e53365407acf99f7ade9ec"},
+    {file = "whitenoise-6.5.0.tar.gz", hash = "sha256:15fe60546ac975b58e357ccaeb165a4ca2d0ab697e48450b8f0307ca368195a8"},
+]
+
+[package.extras]
+brotli = ["Brotli"]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "5dcaafbaf0908555cb4d3ad3a221973ef3db3d132429daf47b6cbcdda0a65930"
+content-hash = "85b656042c39bd208e2e1266f30a1a48b7221d30db01c77f22edc74adb4d708a"

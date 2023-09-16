@@ -6,7 +6,15 @@ SECRET_KEY = environ.get("SECRET_KEY")
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 DATABASES = {
     "default": {
@@ -19,10 +27,13 @@ DATABASES = {
     }
 }
 
-# TODO: EMAIL
+EMAIL_HOST = environ.get("EMAIL_HOST")
+EMAIL_PORT = environ.get("EMAIL_PORT")
+EMAIL_HOST_USER = environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
 
 HCAPTCHA_SITEKEY = environ.get("HCAPTCHA_SITEKEY")
-
 HCAPTCHA_SECRET = environ.get("HCAPTCHA_SECRET")
 
 LOGGING = {

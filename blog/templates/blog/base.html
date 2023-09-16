@@ -11,7 +11,7 @@
       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{% static './blog/css/main.css'%}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/main.css'%}" />
     {% if title %}
     <title>{{ title }}</title>
     {% else %}
@@ -24,7 +24,7 @@
         <div class="container">
           <a class="navbar-brand" href="{% url 'blog_home' %}"
             ><img
-              src="{% static './blog/img/logo.png'%}"
+              src="{% static 'blog/img/logo.png'%}"
               alt="logo"
               class="logo"
           /></a>

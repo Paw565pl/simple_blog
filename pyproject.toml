@@ -25,6 +25,7 @@ pytest-watch = "^4.2.0"
 
 [tool.poetry.group.prod.dependencies]
 gunicorn = "^21.2.0"
+whitenoise = "^6.5.0"
 
 [build-system]
 requires = ["poetry-core"]
