@@ -24,12 +24,20 @@ STORAGES = {
     },
 }
 
+# if only there was a good free tier for postgres in cloud
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         default=environ.get("DB_URL"),
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#     )
+# }
+
 DATABASES = {
-    "default": dj_database_url.config(
-        default=environ.get("DB_URL"),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "mydatabase",
+    }
 }
 
 EMAIL_HOST = environ.get("EMAIL_HOST")
