@@ -1,6 +1,10 @@
 # Simple Blog
 
-This is an imagainary blog built in Django entirely for educational purposes.
+This is an imaginary blog built in Django entirely for educational purposes.
+
+### Live demo
+
+[https://simpleblog-iv6t.onrender.com](https://simpleblog-iv6t.onrender.com)
 
 ### How to run it locally?
 
