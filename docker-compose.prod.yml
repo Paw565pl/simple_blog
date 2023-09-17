@@ -6,7 +6,6 @@ services:
       dockerfile: Dockerfile.prod
     ports:
       - 8000:8000
-    command: sh -c "python manage.py migrate && python manage.py collectstatic && gunicorn -b 0.0.0.0:8000 simpleBlog.wsgi"
     restart: on-failure
     env_file:
       - .env
